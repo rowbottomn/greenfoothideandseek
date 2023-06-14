@@ -14,15 +14,15 @@ public class Monster extends SmoothMover
 
     Player player;
     
-    public int vRange = 100;
-    public int vSpeed = 5;
-    public int vSpread = 60;
+    public int vRange = 600;
+    public int vSpeed = 30;
+    public int vSpread = 90;
     
     Vision vision;
 
     int playerX, playerY;
-    int closestObjectX,closestObjectY; 
-    int closestObject = 10000;
+    //int closestObjectX,closestObjectY; 
+    //int closestObject = 10000;
     
     
     

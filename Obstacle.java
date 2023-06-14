@@ -14,12 +14,12 @@ public class Obstacle extends Actor
      */
     public void act()
     {
-        
+        /*
         MouseInfo mouse = Greenfoot.getMouseInfo();
         if(mouse==null){
             return;
         }
         setLocation(mouse.getX(), mouse.getY());
-        
+        */
     }
 }

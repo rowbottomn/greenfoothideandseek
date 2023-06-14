@@ -37,9 +37,11 @@ public class Ray extends Actor
         startX = v.getX();
         startY = v.getY();
         //getImage().scale(200,200);
-        countDown = 120;
+        countDown = 1200;
         ArrayList<Ray> wave = vision.newRays;
         wave.add(this);
+        
+        //getImage().setTransparency(0);
     }
     
     /**

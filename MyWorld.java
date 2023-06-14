@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class MyWorld extends World
 {
     int frameCount = 0;
+    int numObstacles = 20;
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -20,11 +21,15 @@ public class MyWorld extends World
         
         Monster monster = new Monster();
         addObject(monster, 100, 300);
-        
+        addObject(new Monster(), 400, 300);
         //Player player = new Player();
         //addObject(player, 650, 300);
-        Obstacle obstacle = new Obstacle();
-        addObject(obstacle, 650, 350);
+        for (int i = 0; i < numObstacles; i++){
+            addObject(new Obstacle(), Greenfoot.getRandomNumber(1000), Greenfoot.getRandomNumber(600));     
+        }
+       
+       
+        
         
     }
     

@@ -17,16 +17,15 @@ import java.util.ArrayList;
 public class Vision extends Actor
 {
     protected Monster monster;
-    int range = 500;
-    int speed = 120;
+    int range = 100;
+    int speed = 30;
     int spread = 90;
     int updateFreq = 1;
-    int visionFreq = 40;
+    int visionFreq = 10;
     int frameCount = 0;
+    ArrayList<ArrayList> waves = new ArrayList<ArrayList>();
     ArrayList<Ray> currentRays = new ArrayList<Ray>();
     ArrayList<Ray> newRays = new ArrayList<Ray>();
-    int avoidanceX = 0;
-    int avoidanceY = 0;
     
     public Vision(Monster m){
         monster = m;
@@ -52,25 +51,49 @@ public class Vision extends Actor
         
     }
     
-    int deltaAngle = 5;
+    int deltaAngle = 10;
     int numRays = spread/deltaAngle;
-    int avoidX = 0;
-    int avoidY = 0;
+    double avoidX = 0;
+    double avoidY = 0;
     void look(){
         
         newRays = new ArrayList<Ray>();
-        for(int i = 0; i < currentRays.size();i++){
-            //report the results from the currentRays
-            Ray tempRay = currentRays.get(i);
-            VisionEvent tempEvent = tempRay.getEvent();
+        if (waves.size()>1){
+            currentRays = waves.get(0);
+            for(int i = 0; i < currentRays.size();i++){
+                //report the results from the currentRays
+                Ray tempRay = currentRays.get(i);
+                VisionEvent tempEvent = tempRay.getEvent();
+                
+                avoidX += (tempEvent.x-tempEvent.px);
+                
+                avoidY += (tempEvent.y-tempEvent.py);
+                
+            }
+            waves.remove(currentRays);
             
-            avoidX += (tempEvent.x-tempEvent.px)*2;
-            avoidY += (tempEvent.y-tempEvent.py)*2;
+            avoidX /= numRays;
+            avoidY /= numRays;
+            
+            if((avoidX*avoidX + avoidY*avoidY)<400){
+                monster.turn(Greenfoot.getRandomNumber(90)+180);
+                monster.move(1);
+                ArrayList<ArrayList> waves = new ArrayList<ArrayList>();
+            }
+            else{
+                monster.turnTowards((int)(monster.getExactX()+avoidX),(int)(monster.getExactY()+ avoidY));
+            }
         }
-        for(int i = 0; i < numRays;i++){
+        
+        for(int i = 1; i < numRays/2;i++){
             Ray temp = new Ray(this);
             getWorld().addObject(temp, getX(), getY());
-            temp.setRotation(getRotation()+(-numRays/2+i)*deltaAngle);
+            temp.setRotation(getRotation()+i*deltaAngle);
+            temp.move(speed);
+            newRays.add(temp);
+            temp = new Ray(this);
+            getWorld().addObject(temp, getX(), getY());
+            temp.setRotation(getRotation()-i*deltaAngle);
             temp.move(speed);
             newRays.add(temp);
             //System.out.println("hey");
@@ -78,10 +101,9 @@ public class Vision extends Actor
         /*if(currentAngle>spread/2){
             deltaAngle *= -1;
         }*/
-        avoidX /= numRays;
-        avoidY /= numRays;
-        monster.turnTowards(monster.getX()+avoidX,monster.getY()+ avoidY);
-        currentRays = newRays;
+
+        waves.add(newRays);
+        
     }
     
     
