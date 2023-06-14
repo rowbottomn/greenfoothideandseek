@@ -8,6 +8,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Obstacle extends Actor
 {
+
+    
+    public Obstacle(){
+        GreenfootImage img = getImage();
+        img.fillRect(0,0, img.getWidth(),img.getHeight() );
+    }
+    
     /**
      * Act - do whatever the Obstacle wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.

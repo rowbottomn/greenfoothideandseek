@@ -8,15 +8,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Monster extends SmoothMover
 {
-    private int moveSpeed = 1;
+    private int moveSpeed = 2;
 
     private MouseInfo mouse;
 
     Player player;
     
-    public int vRange = 600;
-    public int vSpeed = 30;
-    public int vSpread = 90;
+    public int vRange = 300;
+    public int vSpeed = 60;
+    public int vSpread = 120;
     
     Vision vision;
 

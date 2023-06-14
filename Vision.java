@@ -18,10 +18,10 @@ public class Vision extends Actor
 {
     protected Monster monster;
     int range = 100;
-    int speed = 30;
+    int speed = 10;
     int spread = 90;
-    int updateFreq = 1;
-    int visionFreq = 10;
+    int updateFreq = 2;
+    int visionFreq = 4;
     int frameCount = 0;
     ArrayList<ArrayList> waves = new ArrayList<ArrayList>();
     ArrayList<Ray> currentRays = new ArrayList<Ray>();
@@ -65,9 +65,9 @@ public class Vision extends Actor
                 Ray tempRay = currentRays.get(i);
                 VisionEvent tempEvent = tempRay.getEvent();
                 
-                avoidX += (tempEvent.x-tempEvent.px);
+                avoidX += (tempEvent.x-tempEvent.px)*tempEvent.distance;
                 
-                avoidY += (tempEvent.y-tempEvent.py);
+                avoidY += (tempEvent.y-tempEvent.py)*tempEvent.distance;
                 
             }
             waves.remove(currentRays);
@@ -75,7 +75,7 @@ public class Vision extends Actor
             avoidX /= numRays;
             avoidY /= numRays;
             
-            if((avoidX*avoidX + avoidY*avoidY)<400){
+            if((avoidX*avoidX + avoidY*avoidY)<200){
                 monster.turn(Greenfoot.getRandomNumber(90)+180);
                 monster.move(1);
                 ArrayList<ArrayList> waves = new ArrayList<ArrayList>();
