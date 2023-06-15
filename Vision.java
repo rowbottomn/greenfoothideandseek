@@ -1,5 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Vision has
  * Monster
@@ -16,22 +18,33 @@ import java.util.ArrayList;
  */
 public class Vision extends Actor
 {
+    final boolean DEBUG = false;
     protected Monster monster;
+    int hearingRange = 60;
     int range = 100;
     int speed = 10;
-    int spread = 90;
+    int spread = 120;//for some reason this is the number used for vision, not the Monster value
     int updateFreq = 2;
     int visionFreq = 4;
     int frameCount = 0;
+    int deltaAngle = 15;
+    int numRays = spread/deltaAngle;
+    double avoidX = 0;
+    double avoidY = 0;
     ArrayList<ArrayList> waves = new ArrayList<ArrayList>();
     ArrayList<Ray> currentRays = new ArrayList<Ray>();
     ArrayList<Ray> newRays = new ArrayList<Ray>();
+    Color seen = new Color(255, 255,0);
+    Color looking = new Color(0, 100, 150);
     
     public Vision(Monster m){
         monster = m;
         this.range = monster.vRange;
         this.speed = monster.vSpeed;
         this.spread = monster.vSpread;
+        if(!DEBUG){
+            getImage().setTransparency(0);
+        }
     }
     
     /**
@@ -47,14 +60,12 @@ public class Vision extends Actor
         }
         if(frameCount%visionFreq == 0){
             look(); 
+            hear();
         }
         
     }
     
-    int deltaAngle = 10;
-    int numRays = spread/deltaAngle;
-    double avoidX = 0;
-    double avoidY = 0;
+
     void look(){
         
         newRays = new ArrayList<Ray>();
@@ -68,9 +79,9 @@ public class Vision extends Actor
                 //check to see if we saw a player.
                 if(tempEvent.owner.equals("player")){
                     monster.report(tempEvent);
+                    
                 }
                 avoidX += (tempEvent.x-tempEvent.px)*tempEvent.distance;
-                
                 avoidY += (tempEvent.y-tempEvent.py)*tempEvent.distance;
                 
             }
@@ -88,9 +99,13 @@ public class Vision extends Actor
                 monster.turnTowards((int)(monster.getExactX()+avoidX),(int)(monster.getExactY()+ avoidY));
             }
         }
-        
+        Ray temp = new Ray(this);
+        getWorld().addObject(temp, getX(), getY());
+        temp.setRotation(getRotation());
+        temp.move(speed);
+        newRays.add(temp);
         for(int i = 1; i < numRays/2;i++){
-            Ray temp = new Ray(this);
+            temp = new Ray(this);
             getWorld().addObject(temp, getX(), getY());
             temp.setRotation(getRotation()+i*deltaAngle);
             temp.move(speed);
@@ -108,6 +123,15 @@ public class Vision extends Actor
 
         waves.add(newRays);
         
+    }
+    
+    void hear(){
+        List<Player> players = getObjectsInRange(hearingRange, Player.class);
+        
+        if (players.size()>0){
+            monster.report(new VisionEvent(players.get(0).getX(),players.get(0).getY()));     
+            //System.out.println("heard player!");
+        }
     }
     
     

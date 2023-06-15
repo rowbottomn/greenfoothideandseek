@@ -13,7 +13,8 @@ public class Obstacle extends Actor
     
     public Obstacle(){
         GreenfootImage img = getImage();
-        img.fillRect(0,0, img.getWidth(),img.getHeight() );
+        img.scale(img.getWidth()+Greenfoot.getRandomNumber(100),img.getWidth()+Greenfoot.getRandomNumber(100) );
+        img.fill();
     }
     
     /**
@@ -35,7 +36,7 @@ public class Obstacle extends Actor
        }
        List<Monster> monsters = getIntersectingObjects(Monster.class);
        for (Monster monster: monsters){
-           monster.move(-monster.moveSpeed*1.1); 
+           monster.move(-monster.moveSpeed*1.2); 
            monster.turn(Greenfoot.getRandomNumber(180)-90);
            monster.vision.waves.clear();
        }

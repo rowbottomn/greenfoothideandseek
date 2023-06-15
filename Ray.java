@@ -41,7 +41,7 @@ public class Ray extends Actor
         ArrayList<Ray> wave = vision.newRays;
         wave.add(this);
         
-        //getImage().setTransparency(0);
+        if(!vision.DEBUG){getImage().setTransparency(0);}
     }
     
     /**

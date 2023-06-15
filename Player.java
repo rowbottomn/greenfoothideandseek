@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Player extends Actor
 {
-    int moveSpeed = 4;
+    int moveSpeed = 6;
     
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
@@ -27,5 +27,9 @@ public class Player extends Actor
        if(isAtEdge()){
            turn(Greenfoot.getRandomNumber(180)+90);
        }
+       if(Greenfoot.getRandomNumber(1000)>995){
+           turn(Greenfoot.getRandomNumber(180)+180);
+       }
+       
     }
 }

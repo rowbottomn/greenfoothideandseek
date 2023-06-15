@@ -37,6 +37,12 @@ public class VisionEvent
         distance = r.distance(x, y, px, py);
     }
     
+    public VisionEvent(int _x, int _y){
+        this.owner = "player";
+        this.x = _x; 
+        this.y = _y;
+    }
+    
     private String getActorClass(Actor a){
         if(a instanceof Obstacle){
             return "obstacle";

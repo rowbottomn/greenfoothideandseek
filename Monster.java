@@ -16,11 +16,13 @@ public class Monster extends SmoothMover
     
     public int vRange = 300;
     public int vSpeed = 60;
-    public int vSpread = 120;
+    public int vSpread = 120;//for some reason this is NOT the number used for vision
     
     Vision vision;
     VisionEvent sighting;
-    int playerX, playerY;
+    int playerX = -9999;
+    int playerY = -9999;
+    double playerDistance;
     //int closestObjectX,closestObjectY; 
     //int closestObject = 10000;
     
@@ -30,7 +32,11 @@ public class Monster extends SmoothMover
         if(sighting.owner.equals("player")){
            playerX = sighting.x;
            playerY = sighting.y;
-           System.out.println("Saw player!");
+           if(vision.DEBUG){
+               vision.getImage().setColor(vision.seen);
+               vision.getImage().fill();
+            }
+           //System.out.println("Saw player!");
         }
     /*    else if(sighting.owner.equals("obstacle")){
             if(findDistance(sighting.x, sighting.y, getX(), getY())<closestObject){
@@ -116,10 +122,21 @@ public class Monster extends SmoothMover
             playerX = getX();
             playerY = getY();
         }
-      /*  if(findDistance(playerX, playerY, getX(), getY())>10 ){
+        
+        if(playerX != -9999){
+            
             turnTowards(playerX, playerY);
             move(2*moveSpeed);
-        }*/
+            playerDistance = findDistance((double)playerX, (double)playerY, (double)getX(), (double)getY());
+            if(playerDistance > vRange || playerDistance < 10){
+                playerX = -9999;
+                if(vision.DEBUG){         
+                    vision.getImage().setColor(vision.looking);
+                    vision.getImage().fill();
+                }
+            }
+        }
+        
         
         // Add your action code here.
         move(moveSpeed);
