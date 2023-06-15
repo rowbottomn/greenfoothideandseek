@@ -21,7 +21,13 @@ public class MyWorld extends World
         
         Monster monster = new Monster();
         addObject(monster, 100, 300);
+        
         addObject(new Monster(), 400, 300);
+        addObject(new Monster(), 400, 500);
+        addObject(new Monster(), 300, 200);
+                addObject(new Monster(), 100, 200);
+        addObject(new Monster(), 100, 500);
+        addObject(new Monster(),800, 200);
         //Player player = new Player();
         //addObject(player, 650, 300);
         for (int i = 0; i < numObstacles; i++){

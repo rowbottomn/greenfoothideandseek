@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Monster extends SmoothMover
 {
-    private int moveSpeed = 2;
+     int moveSpeed = 3;
 
     private MouseInfo mouse;
 
@@ -19,7 +19,7 @@ public class Monster extends SmoothMover
     public int vSpread = 120;
     
     Vision vision;
-
+    VisionEvent sighting;
     int playerX, playerY;
     //int closestObjectX,closestObjectY; 
     //int closestObject = 10000;
@@ -116,12 +116,11 @@ public class Monster extends SmoothMover
             playerX = getX();
             playerY = getY();
         }
-        /*
-        if(findDistance(playerX, playerY, getX(), getY())>20 ){
+      /*  if(findDistance(playerX, playerY, getX(), getY())>10 ){
             turnTowards(playerX, playerY);
-            move(moveSpeed);
-        }
-        */
+            move(2*moveSpeed);
+        }*/
+        
         // Add your action code here.
         move(moveSpeed);
     }

@@ -45,7 +45,7 @@ public class Vision extends Actor
             setLocation(monster.getX(), monster.getY());
             setRotation(monster.getRotation());
         }
-        if(frameCount%visionFreq ==0){
+        if(frameCount%visionFreq == 0){
             look(); 
         }
         
@@ -61,10 +61,14 @@ public class Vision extends Actor
         if (waves.size()>1){
             currentRays = waves.get(0);
             for(int i = 0; i < currentRays.size();i++){
+                
                 //report the results from the currentRays
                 Ray tempRay = currentRays.get(i);
                 VisionEvent tempEvent = tempRay.getEvent();
-                
+                //check to see if we saw a player.
+                if(tempEvent.owner.equals("player")){
+                    monster.report(tempEvent);
+                }
                 avoidX += (tempEvent.x-tempEvent.px)*tempEvent.distance;
                 
                 avoidY += (tempEvent.y-tempEvent.py)*tempEvent.distance;
